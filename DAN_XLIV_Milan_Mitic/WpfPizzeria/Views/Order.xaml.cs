@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using WpfPizzeria.ViewModels;
 
-namespace WpfPizzeria
+namespace WpfPizzeria.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Order.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Order : Window
     {
-        public MainWindow()
+        public Order()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel(this);
+            this.DataContext = new OrderViewModel(this);
         }
     }
 }
