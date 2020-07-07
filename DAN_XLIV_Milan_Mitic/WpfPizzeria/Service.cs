@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WpfPizzeria.Model;
 
 namespace WpfPizzeria
@@ -40,6 +38,61 @@ namespace WpfPizzeria
         }
 
         /// <summary>
+        /// Gets all records with the ID of the selected order, which is kept in the txt file.
+        /// Adds them to the list.
+        /// </summary>
+        /// <returns></returns>
+        public List<tblRecord> GetRecords()
+        {
+            string id = "";
+            using (StreamReader sr = new StreamReader("../../Order.txt"))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    id = line;
+                }
+            }
+            try
+            {
+                using (RestaurantEntities context = new RestaurantEntities())
+                {
+                    int i = Convert.ToInt32(id);
+                    List<tblRecord> list = new List<tblRecord>();
+                    list = (from x in context.tblRecords where x.OrderID == i select x).ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets all orders from a DataBase and adds the to the list.
+        /// </summary>
+        /// <returns></returns>
+        public List<tblOrder> GetAllOrders()
+        {
+            try
+            {
+                using (RestaurantEntities context = new RestaurantEntities())
+                {
+                    List<tblOrder> list = new List<tblOrder>();
+                    list = (from x in context.tblOrders select x).ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Exception" + ex.Message.ToString());
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Adds all the meals from the database to a list.
         /// </summary>
         /// <returns></returns>
@@ -61,6 +114,11 @@ namespace WpfPizzeria
             }
         }
 
+        /// <summary>
+        /// Adds new order to the DataBase.
+        /// </summary>
+        /// <param name="price"></param>
+        /// <returns></returns>
         public tblOrder AddOrder(int price)
         {
             tblOrder order = new tblOrder();
@@ -86,6 +144,10 @@ namespace WpfPizzeria
             return order;
         }
 
+        /// <summary>
+        /// Reads a line from a txt file that keeps JMBG of the logged in user.
+        /// </summary>
+        /// <returns></returns>
         private string GetJmbg()
         {
             string jmbg = "";
@@ -100,6 +162,11 @@ namespace WpfPizzeria
             return jmbg;
         }
 
+        /// <summary>
+        /// Adds new record to the DataBase.
+        /// </summary>
+        /// <param name="recordList"></param>
+        /// <param name="orderID"></param>
         public void AddRecord(List<tblRecord> recordList, int orderID)
         {
             try

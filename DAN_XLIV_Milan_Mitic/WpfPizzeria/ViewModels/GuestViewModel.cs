@@ -174,7 +174,7 @@ namespace WpfPizzeria.ViewModels
             {
                 tblOrder order = service.AddOrder(AmountInt);
                 service.AddRecord(recordList, order.OrderID);
-                MessageBox.Show("Order succesfull.");
+                MessageBox.Show("Order placed and waiting to be aprroved.");
             }
             catch (Exception ex)
             {
