@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfPizzeria.Model;
 
 namespace WpfPizzeria
 {
@@ -35,6 +36,28 @@ namespace WpfPizzeria
                 jmbg = false;
             }
             return jmbg;
+        }
+
+        /// <summary>
+        /// Adds all the meals from the database to a list.
+        /// </summary>
+        /// <returns></returns>
+        public List<tblMenu> GetAllMeals()
+        {
+            try
+            {
+                using (RestaurantEntities context = new RestaurantEntities())
+                {
+                    List<tblMenu> list = new List<tblMenu>();
+                    list = (from x in context.tblMenus select x).ToList();
+                    return list;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Exception" + ex.Message.ToString());
+                return null;
+            }
         }
     }
 }

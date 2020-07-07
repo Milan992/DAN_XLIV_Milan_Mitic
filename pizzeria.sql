@@ -54,3 +54,11 @@ values('Approved');
 insert into tblStatus (StatusName)
 values('Declined');
 
+insert into tblMenu(MealName, Price)
+values('Capriciosa', 300);
+
+insert into tblMenu(MealName, Price)
+values('Margarita', 350);
+
+insert into tblMenu(MealName, Price)
+values('Mexicana', 400);
