@@ -8,6 +8,14 @@ namespace WpfPizzeria
 {
     class Service
     {
-
+        /// <summary>
+        /// Checks if string is in JMBG format.
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public bool CheckJmbg(string userName)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
