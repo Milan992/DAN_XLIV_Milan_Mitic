@@ -51,7 +51,7 @@
         <TextBlock HorizontalAlignment="Left"
                    Margin="371,145,0,0"
                    TextWrapping="Wrap"
-                   Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
+                   Text="{Binding Path=Price, Mode=OneWay}"
                    VerticalAlignment="Top" />
         <Button Content="Order"
                 Command="{Binding Order, UpdateSourceTrigger=PropertyChanged}"

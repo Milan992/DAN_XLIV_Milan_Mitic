@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace WpfPizzeria
                     DateTime dateOfBirth = DateTime.ParseExact(date, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
                     jmbg = true;
                 }
-                catch 
+                catch
                 {
                     jmbg = false;
                 }
@@ -57,6 +58,65 @@ namespace WpfPizzeria
             {
                 System.Diagnostics.Debug.Write("Exception" + ex.Message.ToString());
                 return null;
+            }
+        }
+
+        public tblOrder AddOrder(int price)
+        {
+            tblOrder order = new tblOrder();
+            try
+            {
+                using (RestaurantEntities context = new RestaurantEntities())
+                {
+                    order.JMBG = GetJmbg();
+                    order.DateAndTime = DateTime.ParseExact(DateTime.Now.ToString("yyyy-MM-dd-hh-mm"), "yyyy-MM-dd-hh-mm", System.Globalization.CultureInfo.InvariantCulture);
+                    order.StatusID = 1;
+                    order.Price = price;
+                    context.tblOrders.Add(order);
+                    context.SaveChanges();
+                    int id = order.OrderID;
+                    order.OrderID = id;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Exception" + ex.Message.ToString());
+                return null;
+            }
+            return order;
+        }
+
+        private string GetJmbg()
+        {
+            string jmbg = "";
+            using (StreamReader sr = new StreamReader("../../Username.txt"))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    jmbg = line;
+                }
+            }
+            return jmbg;
+        }
+
+        public void AddRecord(List<tblRecord> recordList, int orderID)
+        {
+            try
+            {
+                using (RestaurantEntities context = new RestaurantEntities())
+                {
+                    foreach (var item in recordList)
+                    {
+                        item.OrderID = orderID;
+                        context.tblRecords.Add(item);
+                        context.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.Write("Exception" + ex.Message.ToString());
             }
         }
     }

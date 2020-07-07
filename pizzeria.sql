@@ -30,8 +30,8 @@ StatusName varchar(10)
 
 create table tblOrder(
 OrderID int identity(1,1) primary key,
-JMBG varchar(30) check(len(JMBG) = 13)  not null unique,
-DateAndTime date not null,
+JMBG varchar(30) check(len(JMBG) = 13)  not null,
+DateAndTime datetime not null,
 StatusID int foreign key (StatusID) references tblStatus(StatusID) not null,
 Price int,
 constraint checkJMBG check(JMBG not like '%[^0-9]%')
