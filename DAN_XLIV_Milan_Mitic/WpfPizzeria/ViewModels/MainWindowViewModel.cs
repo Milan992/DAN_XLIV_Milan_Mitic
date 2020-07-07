@@ -81,7 +81,7 @@ namespace WpfPizzeria.ViewModels
         {
             try
             {
-                if (service.CheckJmbg(UserName) && Password == "Gost")
+                if (service.IsJmbg(UserName) && Password == "Gost")
                 {
                     Guest guest = new Guest();
                     guest.ShowDialog();
